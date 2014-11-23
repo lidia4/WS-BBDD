@@ -8,8 +8,10 @@
 <hibernate-configuration>  
     <session-factory>  
     <!-- Database connection settings -->
+    
         <property name="hibernate.connection.driver_class">com.mysql.jdbc.Driver</property>
         <property name="hibernate.connection.url">jdbc:mysql://localhost:3306/beflow</property>  
+         <!-- Aquí has de posar el teu user y contraseña-->
         <property name="hibernate.connection.username">root</property>  
         <property name="hibernate.connection.password"></property>  
          
@@ -17,14 +19,17 @@
         <property name="connection.pool_size">1</property>
         
         <!-- Dialecto de la base de datos -->
+        <!-- MYSQL 5 has de canviar org.hibernate.dialect.MySQL5Dialect-->
         <property name="hibernate.dialect">org.hibernate.dialect.MySQLDialect</property>  
         
         <!-- Otras propiedades importantes -->
         <property name="show_sql">true</property> 
-        <property name="hbm2ddl.auto">create-drop</property>  
-          
-        <!-- Archivos de mapeo //Full qualified class name  
-        <mapping class="edu.upc.ettac.dxat.lihect.hibernat.example.Cliente" />--> 
+        
+        <!-- Aquesta línea el que fa es buidar la taula com es en mode proves jo no la utilitzo, comentala si ho necessites --> 
+        <property name="hbm2ddl.auto">create-drop</property>
+        
+        <!-- Archivos de mapeo //Full qualified class name  --> 
+        <mapping class="edu.upc.ettac.dxat.lihect.WS.BBDD.User" />
   
     </session-factory>  
 </hibernate-configuration>  
