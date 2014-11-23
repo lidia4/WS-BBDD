@@ -6,7 +6,7 @@ import org.hibernate.cfg.AnnotationConfiguration;
 
 public class HibernateUtil {
 
-	private static final SessionFactory sessionFactory; //solo existe una instancia en la aplicación
+	private static final SessionFactory sessionFactory; //solo existe una instancia en la aplicaciï¿½n
 
 	static
 	{
@@ -15,7 +15,7 @@ public class HibernateUtil {
 	    sessionFactory = new AnnotationConfiguration().configure().buildSessionFactory();
 	    } catch (HibernateException he)
 	    {
-	        System.err.println("Ocurrió un error en la inicialización de la SessionFactory: " + he);
+	        System.err.println("OcurriÃ³ un error en la inicializaciÃ³n de la SessionFactory: " + he);
 	        throw new ExceptionInInitializerError(he);
 	    }
 	}
