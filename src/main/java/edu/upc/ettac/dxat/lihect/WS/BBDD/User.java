@@ -1,25 +1,25 @@
 package edu.upc.ettac.dxat.lihect.WS.BBDD;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.Table;
+import java.io.Serializable;
+
+import javax.persistence.*;
+
 
 
 @Entity
 @Table(name="users")
-public class User {
+public class User implements Serializable{
 	
 	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
-	private long id_user;
+	private long id;
 	private int role;
-	private String mail;
+	private String login;
 	private String password;
 	//private id_company;
   
-	//constructor
+	//constructor no se necesita ya que todo estará relacionado
+	/*
     public User(String mail, String password,int role){
     	
     	this.role = role;
@@ -27,7 +27,7 @@ public class User {
     	this.password =password;
   
     }
-   
+   */
     //constructor sin argumentos, para recuperar las entidades de la BBDD 
     public User()
     {
@@ -41,12 +41,12 @@ public class User {
 		this.role = role;
 	}
 
-	public String getMail() {
-		return mail;
+	public String getLogin() {
+		return login;
 	}
 
-	public void setMail(String mail) {
-		this.mail = mail;
+	public void setLogin(String login) {
+		this.login = login;
 	}
 
 	public String getPassword() {
@@ -60,10 +60,10 @@ public class User {
     
      private void setId(long id_user)
     {
-        this.id_user = id_user;
+        this.id = id_user;
     }
  	public long getId_user() {
-		return id_user;
+		return id;
 	}
 
 

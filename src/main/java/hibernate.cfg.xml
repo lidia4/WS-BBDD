@@ -29,6 +29,7 @@
         <property name="hbm2ddl.auto">create-drop</property>
         
         <!-- Archivos de mapeo //Full qualified class name  --> 
+        <mapping class="edu.upc.ettac.dxat.lihect.WS.BBDD.InfoUser" />
         <mapping class="edu.upc.ettac.dxat.lihect.WS.BBDD.User" />
   
     </session-factory>  
