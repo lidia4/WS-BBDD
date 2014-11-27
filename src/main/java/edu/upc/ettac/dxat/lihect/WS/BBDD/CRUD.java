@@ -9,7 +9,7 @@ import org.hibernate.Transaction;
 
 
 
-public class InfoUser_CRUD {
+public class CRUD {
 
 	//atributos para mantener la referencia de la sesion de la bbdd y la transaccion
 	private Session sesion;
@@ -32,10 +32,13 @@ public class InfoUser_CRUD {
 	    throw new HibernateException("Ocurrió un error en la capa de acceso a datos", he);
 	}
 	
-	//metodos CRUD
+	
+	
+/*************************** CRUD USER ************************************/
 	
 	//Inserta nuevo usuario devolviendo el id de la tabla
-	public long Create_user(User user)
+	
+	public long create_user(User user)
 	{ 
 	    long id = 0; //id de la tabla user (único) 
 
@@ -56,17 +59,15 @@ public class InfoUser_CRUD {
 	}
 
 	
+	//actualizacion de User
 	
-	//actualizacion de CLiente
-	
-	
-	public void Update_user(User user) throws HibernateException 
+	public void update_user(User user) throws HibernateException 
 	{ 
 	    try 
 	    { 
 	        iniciaOperacion(); 
 	        sesion.update(user); //metodo update de objeto sesion
-	        tx.commit(); 
+	        tx.commit();
 	    }catch (HibernateException he) 
 	    { 
 	        manejaExcepcion(he); 
@@ -78,7 +79,8 @@ public class InfoUser_CRUD {
 	}
 	
 	//buscar usuario por el correo electronico (identificacion única de user)
-	public User Read_user(String mail) throws HibernateException
+	
+	public User read_user(String mail) throws HibernateException
 	{ 
 		User user = null;  
 		String i=null;
@@ -102,7 +104,8 @@ public class InfoUser_CRUD {
 	
 	
 	//eliminamos cliente
-	public void Delete_user(User user) throws HibernateException 
+	
+	public void delete_user(User user) throws HibernateException 
     { 
         try 
         { 
@@ -121,7 +124,7 @@ public class InfoUser_CRUD {
 
 	//retorna toda la lista de usuarios
 	
-	public List<User> User_list() throws HibernateException 
+	public List<User> user_list() throws HibernateException 
 	{ 
 		List <User> Lista_usuarios = null;  
 	    
@@ -135,6 +138,81 @@ public class InfoUser_CRUD {
 	    }  
 	    return Lista_usuarios; 
 	}
+	
+	
+	/********************************CRUD COMPANY*******************/
+	
+	// Añade una nueva compañia  devolviendo el id de la tabla
+	public long create_company(Company company)
+	{ 
+	    long id = 0; //id de la tabla company) 
+
+	    try 
+	    { 
+	        iniciaOperacion(); 
+	        sesion.persist(company); //metodo para guardar cliente (del objeto hibernate.sesion) 
+	        
+	        //sesion.persist(persona1);?
+	        //sesion.persist(persona2);?
+	        
+	        tx.commit(); 
+	    }catch(HibernateException he) 
+	    { 
+	        manejaExcepcion(he);
+	        throw he; 
+	    }finally 
+	    { 
+	        sesion.close(); 
+	    }  
+	    return id; 
+	    
+	  //actualizacion de company
+	   /** public void update_company(Company company1) throws HibernateException 
+		{ 
+		    try 
+		    { 
+		        iniciaOperacion(); 
+		        sesion.update(company1); //metodo update de objeto sesion
+		        tx.commit();
+		    }catch (HibernateException he) 
+		    { 
+		        manejaExcepcion(he); 
+		        throw he; 
+		    }finally 
+		    { 
+		        sesion.close(); 
+		    } 
+		}*/
+	    
+	  //eliminamos compañia
+		
+		public void del_company(Company company1) throws HibernateException 
+	    { 
+	        try 
+	        { 
+	            iniciaOperacion(); 
+	            sesion.delete(company1); //le pasamos todo el objeto a eliminar
+	            tx.commit(); 
+	        } catch (HibernateException he) 
+	        { 
+	            manejaExcepcion(he); 
+	            throw he; 
+	        } finally 
+	        { 
+	            sesion.close(); 
+	        } 
+	    }  
+
+	    
+	
+	    
+	}
+
+	
+
+ 
+
+  
 	
 	
 }
