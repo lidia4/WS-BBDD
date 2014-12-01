@@ -122,7 +122,7 @@ public class CRUD {
         } 
     }  
 
-	//retorna toda la lista de usuarios
+	//retorna toda la lista de usuarios NO SE SI HACE FALTA
 	
 	public List<User> user_list() throws HibernateException 
 	{ 
@@ -140,7 +140,8 @@ public class CRUD {
 	}
 	
 	
-	/********************************CRUD COMPANY*******************/
+	
+/********************************CRUD COMPANY*******************/
 	
 	// Añade una nueva compañia  devolviendo el id de la tabla
 	public long create_company(Company company)
@@ -150,6 +151,7 @@ public class CRUD {
 	    try 
 	    { 
 	        iniciaOperacion(); 
+	        //id= (Long) 
 	        sesion.persist(company); //metodo para guardar cliente (del objeto hibernate.sesion) 
 	        
 	        //sesion.persist(persona1);?
@@ -165,14 +167,15 @@ public class CRUD {
 	        sesion.close(); 
 	    }  
 	    return id; 
+	}
 	    
 	  //actualizacion de company
-	   /** public void update_company(Company company1) throws HibernateException 
+	   public void update_company(Company company) throws HibernateException 
 		{ 
 		    try 
 		    { 
 		        iniciaOperacion(); 
-		        sesion.update(company1); //metodo update de objeto sesion
+		        sesion.update(company); //metodo update de objeto sesion
 		        tx.commit();
 		    }catch (HibernateException he) 
 		    { 
@@ -182,16 +185,169 @@ public class CRUD {
 		    { 
 		        sesion.close(); 
 		    } 
-		}*/
+		}
 	    
-	  //eliminamos compañia
+	  //eliminamos compañia -> si se borra compañia los usuarios seran borrados en cascada
 		
-		public void del_company(Company company1) throws HibernateException 
+		public void delete_company(Company company) throws HibernateException 
 	    { 
 	        try 
 	        { 
 	            iniciaOperacion(); 
-	            sesion.delete(company1); //le pasamos todo el objeto a eliminar
+	            sesion.delete(company); //le pasamos todo el objeto a eliminar
+	            tx.commit(); 
+	        } catch (HibernateException he) 
+	        { 
+	            manejaExcepcion(he); 
+	            throw he; 
+	        } finally 
+	        { 
+	            sesion.close(); 
+	        } 
+	    }  
+		
+		
+		//retorna toda la lista de compañias
+		
+		public List<Company> company_list() throws HibernateException 
+		{ 
+			List <Company> Lista_compañias = null;  
+		    
+		    try 
+		    { 
+		        iniciaOperacion(); //IMPORTANTE la query: se pide la clase realmnete Cliente! no la tabla que se ha creado
+		        Lista_compañias=  sesion.createQuery("FROM Company").list(); //creamos consulta de la tabla clientes (en plural)!
+		    }finally 
+		    { 
+		        sesion.close(); 
+		    }  
+		    return Lista_compañias; 
+		}
+		
+		//retorna una compañia buscada por su nombre
+		
+		public Company read_company(String name) throws HibernateException
+		{ 
+			Company comp = null;  
+			String i=null;
+			long id_company=0;
+		    try 
+		    { 
+		       iniciaOperacion(); //unique result me devuelve el objeto encontrado con dicho correo electronico
+		      
+		       i=  sesion.createQuery("SELECT c.id_company FROM Company c WHERE c.company_name ='"+name+"'").uniqueResult().toString();
+		       //una vez encontrado el id del user puedo buscarlo
+		       
+		       id_company= Integer.parseInt(i);
+		       comp= (Company) sesion.get(Company.class, id_company); 
+		     
+		    } finally 
+		    { 
+		        sesion.close(); 
+		    }  
+		    return comp; 
+		}
+		
+	/***************************METODOS CRUD NODOS************************************/
+		
+		
+		//Inserta nuevo usuario devolviendo el id de la tabla
+		
+		public long create_node(Node node)
+		{ 
+		    long id = 0; //id de la tabla user (único) 
+
+		    try 
+		    { 
+		        iniciaOperacion(); 
+		        id = (Long)sesion.save(node); //metodo para guardar cliente (del objeto hibernate.sesion) 
+		        tx.commit(); 
+		    }catch(HibernateException he) 
+		    { 
+		        manejaExcepcion(he);
+		        throw he; 
+		    }finally 
+		    { 
+		        sesion.close(); 
+		    }  
+		    return id; 
+		}
+
+		
+		//actualizacion de User
+		
+		public void update_node(Node node) throws HibernateException 
+		{ 
+		    try 
+		    { 
+		        iniciaOperacion(); 
+		        sesion.update(node); //metodo update de objeto sesion
+		        tx.commit();
+		    }catch (HibernateException he) 
+		    { 
+		        manejaExcepcion(he); 
+		        throw he; 
+		    }finally 
+		    { 
+		        sesion.close(); 
+		    } 
+		}
+		
+		//buscar nombre del nodo por mac y puerto
+		
+		public String read_node(String MAC, String port_number) throws HibernateException
+		{ 
+			User user = null;  
+			String i=null;
+			long id_user=0;
+		    try 
+		    { 
+		       iniciaOperacion(); //unique result me devuelve el objeto encontrado con dicho correo electronico
+		       
+		       i=  (String) sesion.createQuery("SELECT u.node_name FROM Node u WHERE u.MAC_address ='"+MAC+"' and u.port_number ='"+port_number+"'").uniqueResult();
+		       //una vez encontrado el id del user puedo buscarlo
+		       //id_user= Integer.parseInt(i);
+		       //user = (User) sesion.get(User.class, id_user); 
+		     
+		    } finally 
+		    { 
+		        sesion.close(); 
+		    }  
+		    return i; 
+		}
+		
+		//buscar nombre del nodo por mac y puerto y retorna el nodo
+		
+				public Node read_node2(String MAC, String port_number) throws HibernateException
+				{ 
+					Node node = null;  
+					String i=null;
+					long id_node=0;
+				    try 
+				    { 
+				       iniciaOperacion(); //unique result me devuelve el objeto encontrado con dicho correo electronico
+				       
+				       i=  sesion.createQuery("SELECT u.id_node FROM Node u WHERE u.MAC_address ='"+MAC+"' and u.port_number ='"+port_number+"'").uniqueResult().toString();
+				       //una vez encontrado el id del user puedo buscarlo
+				       id_node= Integer.parseInt(i);
+				       node = (Node) sesion.get(Node.class, id_node); 
+				     
+				    } finally 
+				    { 
+				        sesion.close(); 
+				    }  
+				    return node; 
+				}
+		
+		
+		//eliminamos nodo
+		
+		public void delete_node(Node node) throws HibernateException 
+	    { 
+	        try 
+	        { 
+	            iniciaOperacion(); 
+	            sesion.delete(node); //le pasamos todo el objeto a eliminar
 	            tx.commit(); 
 	        } catch (HibernateException he) 
 	        { 
@@ -203,10 +359,31 @@ public class CRUD {
 	        } 
 	    }  
 
-	    
-	
-	    
-	}
+		//retorna toda la lista de usuarios*** NO SE SI ES NECESARI
+		
+		public List<Node> node_list() throws HibernateException 
+		{ 
+			List <Node> Lista_nodos = null;  
+		    
+		    try 
+		    { 
+		        iniciaOperacion(); //IMPORTANTE la query: se pide la clase realmnete Cliente! no la tabla que se ha creado
+		        Lista_nodos=  sesion.createQuery("FROM Node").list(); //creamos consulta de la tabla clientes (en plural)!
+		    }finally 
+		    { 
+		        sesion.close(); 
+		    }  
+		    return Lista_nodos; 
+		}
+		
+		
+		
+		
+		
+		
+		
+		
+}
 
 	
 
@@ -215,4 +392,3 @@ public class CRUD {
   
 	
 	
-}

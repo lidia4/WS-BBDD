@@ -24,7 +24,7 @@ public class User implements Serializable{
 	@ManyToOne //relación bidireccional, muchos users pertenecen a una misma compañia
 	private Company company;
   
-	//constructor no se necesita ya que todo estará relacionado
+	//constructor 
 	
     public User(String login, String password,int role, String name,String phone, String department){
     	
