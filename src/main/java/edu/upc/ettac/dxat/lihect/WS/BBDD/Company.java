@@ -6,6 +6,9 @@ import java.util.List;
 
 import javax.persistence.*;
 
+import edu.upc.ettac.dxat.lihect.WS.BBDD.Node;
+import edu.upc.ettac.dxat.lihect.WS.BBDD.User;
+
 
 
 @Entity
@@ -26,7 +29,7 @@ public class Company implements Serializable{
 	modo de recuperazión de datos lazy, los recupera cuando son necesarios, de esta manera no sobre
 	cargamos el sistema**/
 	//Relación tabla usuarios
-	@OneToMany(cascade=CascadeType.ALL, fetch=FetchType.LAZY,mappedBy="company")
+	@OneToMany( cascade=CascadeType.ALL, fetch=FetchType.LAZY,mappedBy="company")
 	private List<User> usuarios = new ArrayList<User>();
 	
 	//relacion tabla nodos

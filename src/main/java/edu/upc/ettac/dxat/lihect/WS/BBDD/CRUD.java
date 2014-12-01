@@ -2,6 +2,7 @@ package edu.upc.ettac.dxat.lihect.WS.BBDD;
 
 import java.util.List;
 
+
 import org.hibernate.HibernateException;
 import org.hibernate.Query;
 import org.hibernate.Session;

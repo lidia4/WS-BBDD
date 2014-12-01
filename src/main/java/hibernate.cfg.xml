@@ -23,7 +23,7 @@
         <property name="hibernate.dialect">org.hibernate.dialect.MySQLDialect</property>  
         
         <!-- Otras propiedades importantes -->
-         <!-- <property name="show_sql">true</property> -->
+         <property name="show_sql">true</property>
         
         <!-- Aquesta línea el que fa es buidar la taula com es en mode proves jo no la utilitzo, comentala si ho necessites --> 
         <property name="hbm2ddl.auto">create-drop</property>

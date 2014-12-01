@@ -6,6 +6,8 @@ package edu.upc.ettac.dxat.lihect.WS.BBDD;
 
 import java.util.List;
 
+
+
 public class App 
 {
     public static void main( String[] args )
@@ -132,7 +134,12 @@ public class App
         for(User c : Lista_Users) 
         { 
             System.out.println("-> " + c.getMail()); 
-        } 
+        }
+   
+        //delete comapny
+        //1 delete nodo
+        crud.delete_node(nodo1);
+        //crud.delete_company(comp1);
     	
-    }
+    }  
 }
